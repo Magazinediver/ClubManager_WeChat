@@ -4,11 +4,11 @@
     <el-menu
       :collapse="collapse"
       :default-active="onRoutes"
-      active-text-color="#5ba3bb"
-      background-color="#2f3a4b"
+      active-text-color="#fff"
+
       class="sidebar-el-menu"
       router
-      text-color="#bfcbd9"
+
       unique-opened
     >
 

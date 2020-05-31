@@ -24,12 +24,12 @@
                 class="login_form"
               >
                 <el-form-item prop="username">
-                  <label style="color: #fb7299;margin-top: 5px;">Username / 用户昵称</label>
+                  <label style="color: #ff7700;margin-top: 5px;">Username / 用户昵称</label>
                   <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                  <label style="color: #fb7299;margin-bottom: 0px;" class="pull-left">Password / 密码</label>
-                  <a href="pages-recover-password.html" style="color: #fb7299;text-decoration:none;float:right">Lost Password?/忘记密码？</a>
+                  <label style="color: #fb7700;margin-bottom: 0px;" class="pull-left">Password / 密码</label>
+                  <a href="pages-recover-password.html" style="color: #ff7700;text-decoration:none;float:right">Lost Password?/忘记密码？</a>
                   <el-input
                     v-model="loginForm.password"
                     type="password"
@@ -43,8 +43,8 @@
                   </div>
                 </div>
                 <el-form-item style="width: 205px" class="btns">
-                  <el-button  style="margin-left: 55px;border: #fb7299; background-color: #fb7299" type="primary" @click="login">登录</el-button>
-                  <el-button style="margin-left: 10px;" type="info" @click="resetLoginForm">重置</el-button>
+                  <el-button  style="color: #fff;font-weight: bold;margin-left: 55px;border: 1px solid #ffe300; background-color: #ffc609" type="primary" @click="login">登录</el-button>
+                  <el-button style="margin-left: 10px;background-color: #ff7700;border: 1px solid #ff7700;" type="info" @click="resetLoginForm">重置</el-button>
                 </el-form-item>
                 <span class="mt-lg mb-lg line-thru text-center text-uppercase">
 								<span>or</span>
@@ -152,7 +152,7 @@ export default {
   border-radius: 5px 5px 15px;
 
   background-color: #fff;
-  box-shadow: 0 -5px 0px rgba(251,114,153,1);
+  box-shadow: 0 -5px 0px rgb(255, 198, 9);
 
   .avatar_box {
     width: 200px;
@@ -169,7 +169,7 @@ export default {
   float: right;
   width: 120px;
   height: 50px;
-  background-color: #fb7299;
+  background-color: #ffc609;
   align-items: center;
   justify-content: center;
 }

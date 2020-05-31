@@ -65,7 +65,7 @@ export default {
 }
 
 .el-header{
-  height: 56px!important;
+  height: 60px!important;
   padding: 0;
 }
 

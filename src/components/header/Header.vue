@@ -1,41 +1,43 @@
 <template>
-  <div class="head_container">
-    <div style="padding-left: 20px;padding-top: 4px" @click="collapseChage">
-      <i style="margin-top: 3px" v-if="!collapse" class="el-icon-s-fold"></i>
-      <i style="margin-top: 3px"  v-else class="el-icon-s-unfold"></i>
-      <img class="top_logo" src="../../assets/images/logo.png" alt />
-    </div>
+  <div class="header-top">
+    <div class="head_container">
+      <div style="padding-left: 20px;padding-top: 4px" @click="collapseChage">
+        <i style="margin-top: 3px" v-if="!collapse" class="el-icon-s-fold"></i>
+        <i style="margin-top: 3px"  v-else class="el-icon-s-unfold"></i>
+        <img class="top_logo" src="../../assets/images/logo.png" alt />
+      </div>
 
-    <div class="header-right">
-      <div class="header-user-con">
-        <!-- 全屏显示 -->
-        <div class="btn-fullscreen" @click="handleFullScreen">
-          <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
-            <i style="margin-top: 2px" class="el-icon-rank"></i>
-          </el-tooltip>
-        </div>
-        <!-- 用户头像 -->
-        <div class="user-avator">
-          <img src="../../assets/images/avator_1.jpeg" />
-        </div>
-        <!-- 用户名下拉菜单 -->
-        <el-dropdown class="user-name" trigger="click" @command="handleCommand">
+      <div class="header-right">
+        <div class="header-user-con">
+          <!-- 全屏显示 -->
+          <div class="btn-fullscreen" @click="handleFullScreen">
+            <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
+              <i style="margin-top: 2px" class="el-icon-rank"></i>
+            </el-tooltip>
+          </div>
+          <!-- 用户头像 -->
+          <div class="user-avator">
+            <img src="../../assets/images/avator_1.jpeg" />
+          </div>
+          <!-- 用户名下拉菜单 -->
+          <el-dropdown class="user-name" trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
           {{username}}
           <i class="el-icon-caret-bottom"></i>
         </span>
-          <el-dropdown-menu slot="dropdown">
-            <a style="text-decoration: none" href="https://github.com/Magazinediver/bilibilisearch.git" target="_blank">
-              <el-dropdown-item>项目仓库</el-dropdown-item>
-            </a>
-            <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+            <el-dropdown-menu slot="dropdown">
+              <a style="text-decoration: none" href="https://github.com/Magazinediver/bilibilisearch.git" target="_blank">
+                <el-dropdown-item>项目仓库</el-dropdown-item>
+              </a>
+              <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+
       </div>
+
     </div>
-
-
-
+    <div class="header-line"></div>
   </div>
 
 </template>
@@ -104,14 +106,30 @@
 </script>
 
 <style scoped>
+  .header-top{
+    width: 100%;
+  }
+
   .head_container {
+    width: 100%;
+    height: 56px;
     background-color: #fff;
     display: flex;
     justify-content: space-between;
     padding-left: 0;
     align-items: center;
-    color: #fb7299;
+    color: #ff7700;
     font-size: 20px;
+
+  }
+
+  .header-line{
+    position: absolute;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-image: linear-gradient(to right, #ffc609 , #ff7700);
   }
 
   div {

@@ -67,4 +67,33 @@ body,
     left: 63px;
 }
 
+.el-menu-item:hover {
+    outline: none;
+    background-color: #fff3c6;
+}
+
+.el-menu-item:focus {
+    outline: none;
+    background-image: linear-gradient(to top left, #ffc609 , #ff7700);
+}
+
+.el-submenu__title:hover, .el-submenu__title:focus {
+    outline: none;
+    background-color: #feda65 !important;
+}
+
+/* 缩进后的slidebar bgcolor */
+.el-tooltip:focus:not(.focusing), .el-tooltip:focus:hover{
+    outline: none;
+    background-image: linear-gradient(to top left, #ffc609 , #ff7700);
+}
+
+.el-menu-item.is-active {
+    background-image: linear-gradient(to top left, #ffc609 , #ff7700);
+}
+
+.el-main{
+    background-color: #f2f2f2 !important;
+}
+
 

@@ -25,7 +25,7 @@
                 class="reset_form"
               >
                 <el-form-item prop="username">
-                  <label style="color: #fb7299;margin-top: 5px;">Username / 用户昵称</label>
+                  <label style="color: #ff7700;margin-top: 5px;">Username / 用户昵称</label>
                   <el-input
                     v-model="resetForm.username"
                     prefix-icon="el-icon-user-solid">
@@ -33,7 +33,7 @@
                 </el-form-item>
 
                 <el-form-item prop="password">
-                  <label style="color: #fb7299;margin-bottom: 0px;" class="pull-left">Password / 密码</label>
+                  <label style="color: #ff7700;margin-bottom: 0px;" class="pull-left">Password / 密码</label>
                    <el-input
                     v-model="resetForm.password"
                     type="password"
@@ -42,7 +42,7 @@
                 </el-form-item>
 
                 <el-form-item prop="cpassword">
-                  <label style="color: #fb7299;margin-bottom: 0px;" class="pull-left">Confirm Password / 确认密码</label>
+                  <label style="color: #ff7700;margin-bottom: 0px;" class="pull-left">Confirm Password / 确认密码</label>
                   <el-input
                     v-model="resetForm.cpassword"
                     type="password"
@@ -127,6 +127,10 @@
 </script>
 
 <style scoped>
+  .recover-pwd-container{
+    background-color: #f2f2f2;
+  }
+
   .body-sign{
     background-color: #f2f2f2;
     height: 100%;
@@ -149,7 +153,7 @@
     border-radius: 5px 5px 15px;
 
     background-color: #fff;
-    box-shadow: 0 -5px 0px rgba(251,114,153,1);
+    box-shadow: 0 -5px 0px #ffc609;
 
     .avatar_box {
       width: 200px;
@@ -166,7 +170,7 @@
     float: right;
     width: 200px;
     height: 50px;
-    background-color: #fb7299;
+    background-color: #ffc609;
     align-items: center;
     justify-content: center;
   }
