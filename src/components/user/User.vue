@@ -1,28 +1,8 @@
 <template>
   <div>
-    <!-- 导航区 -->
-    <section style="width: 2000px;padding-bottom: 0;padding-top: 40px;" role="main" class="content-body">
-      <header class="page-header">
-        <h2>UP主查询</h2>
-
-        <div class="right-wrapper pull-right">
-          <ol class="breadcrumbs">
-            <li>
-              <span @click="aclick()">
-                <i class="fa fa-home"></i>
-              </span>
-            </li>
-            <li><span>UP主查询</span></li>
-          </ol>
-
-          <a class="sidebar-right-toggle" ></a>
-        </div>
-      </header>
-    </section>
-
 
     <!-- 卡片视图 -->
-    <el-card style="margin-top: -40px">
+    <el-card style="margin-top: 0px">
       <!-- 搜索 添加 -->
       <el-row :gutter="20">
 
@@ -189,17 +169,17 @@ export default {
   }
 
   .el-input-group__append{
-    background-color: #fb7299!important;
+    background-color: #ffc609!important;
     color: white !important;
   }
 
   .upsearch{
-    background-color: #fb7299 !important;
-    color: white !important;
+    background-color: #ffc609 !important;
+    color: #fff !important;
   }
 
   .upsearch:hover{
-    background-color: #fd457a!important;
+    background-color: #ff7700 !important;
     color: white !important;
   }
 </style>

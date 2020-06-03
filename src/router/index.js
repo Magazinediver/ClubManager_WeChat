@@ -30,9 +30,9 @@ const Users = () => import(/* webpackChunkName: "Users_Rights_Roles" */ '../comp
 
 const Signup = () => import(/* webpackChunkName: "Order_Report" */ '../components/user/Signup.vue')
 const Recoverpwd = () => import('../components/user/Recoverpwd')
-const SearchAll = () => import('../components/search/SearchAll')
-const SearchVideo = () => import('../components/search/SearchVideo')
-const Rank = () => import ('../components/ranks/Rank')
+// const SearchAll = () => import('../components/search/SearchAll')
+// const SearchVideo = () => import('../components/search/SearchVideo')
+// const Rank = () => import ('../components/ranks/Rank')
 
 
 Vue.use(VueRouter)
@@ -46,11 +46,11 @@ const routes = [
     // redirect: '/Welcome',
     children: [
       { path: '/home', component: Welcome },
-      { path: '/videosearch', component: SearchVideo },
-      { path: '/allsearch', component: SearchAll },
+      // { path: '/videosearch', component: SearchVideo },
+      // { path: '/allsearch', component: SearchAll },
       { path: '/usersearch', component: Users },
       { path: '/recoverpwd', component: Recoverpwd },
-      { path: '/rank', component: Rank },
+      // { path: '/rank', component: Rank },
     ] }
 
 ]

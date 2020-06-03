@@ -73,12 +73,16 @@ body,
 }
 
 .el-menu-item:focus {
+    color: #fff;
     outline: none;
+    /*box-shadow: 0px 0px 10px 2px rgba(100,100,100,0.1) inset;*/
     background-image: linear-gradient(to top left, #ffc609 , #ff7700);
 }
 
+
 .el-submenu__title:hover, .el-submenu__title:focus {
     outline: none;
+    color: #fff;
     background-color: #feda65 !important;
 }
 
@@ -89,6 +93,7 @@ body,
 }
 
 .el-menu-item.is-active {
+    color: #fff;
     background-image: linear-gradient(to top left, #ffc609 , #ff7700);
 }
 
