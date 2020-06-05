@@ -3,12 +3,12 @@ module.exports = {
     // port : 7419,
     // host: '0.0.0.0',
     proxy: {
-      '/bilibili': {
-        target: 'http://121.36.153.113:8000/bilibili/',
+      '/clubmanage': {
+        target: 'http://121.36.153.113:8000/clubmanage/',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          '^/bilibili': ''
+          '^/clubmanage': ''
         }
       }
     }

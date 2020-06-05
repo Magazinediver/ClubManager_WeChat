@@ -32,7 +32,7 @@
                   <el-input type="password" v-model="addUserForm.password"></el-input>
                 </el-form-item>
                 <el-form-item class="col-sm-6 mb-lg" prop="mobile">
-                  <label>Mobile / 手机号码</label>
+                  <label>ID / 学号or工号</label>
                   <el-input v-model="addUserForm.mobile"></el-input>
                 </el-form-item>
               </div>
@@ -97,7 +97,7 @@
           username: '',
           password: '',
           email: '',
-          mobile: '',
+          id: '',
         },
         userlist: [],
         // 用户添加表单验证规则

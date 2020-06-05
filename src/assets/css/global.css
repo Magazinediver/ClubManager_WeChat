@@ -6,6 +6,7 @@ body,
     margin: 0;
     padding: 0;
     min-width: 1366px;
+    overflow: hidden;
 }
 
 .el-breadcrumb {
@@ -67,6 +68,10 @@ body,
     left: 63px;
 }
 
+li .el-menu-item{
+    background-color: #ececec;
+}
+
 .el-menu-item:hover {
     outline: none;
     background-color: #fff3c6;
@@ -82,8 +87,8 @@ body,
 
 .el-submenu__title:hover, .el-submenu__title:focus {
     outline: none;
-    color: #fff;
-    background-color: #feda65 !important;
+    /*color: #fff;*/
+    background-color: #fff3c6 !important;
 }
 
 /* 缩进后的slidebar bgcolor */
@@ -101,4 +106,6 @@ body,
     background-color: #f2f2f2 !important;
 }
 
-
+.el-card__body{
+    padding: 0!important;
+}

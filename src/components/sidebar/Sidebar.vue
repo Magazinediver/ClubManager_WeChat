@@ -59,28 +59,57 @@
         items: [
           {
             icon: 'el-icon-house',
-            index: 'home',
+            index: 'welcome',
             title: '首页'
           },
           {
             icon: 'el-icon-tickets',
-            index: 'allsearch',
-            title: '综合查询'
+            index: 'clubmanager',
+            title: '社团管理',
+            subs: [
+              {
+                icon: 'el-icon-user',
+                index: 'clubmember',
+                title: '社员管理'
+              },
+              {
+                icon: 'el-icon-setting',
+                index: 'actapplication',
+                title: '活动申请'
+              },
+              {
+                icon: 'el-icon-user',
+                index: 'editactivity',
+                title: '编辑活动'
+              },
+              {
+                icon: 'el-icon-setting',
+                index: 'editclub',
+                title: '编辑社团'
+              }
+            ]
           },
           {
             icon: 'el-icon-user-solid',
-            index: 'usersearch',
-            title: 'up主搜索'
-          },
-          {
-            icon: 'el-icon-film',
-            index: 'videosearch',
-            title: '视频搜索'
-          },
-          {
-            icon: 'el-icon-data-analysis',
-            index: 'rank',
-            title: '排行榜'
+            index: 'check',
+            title: '审核模块',
+            subs: [
+              {
+                icon: 'el-icon-user',
+                index: 'checkclub',
+                title: '社团审核'
+              },
+              {
+                icon: 'el-icon-setting',
+                index: 'checkactivity',
+                title: '活动审核'
+              },
+              {
+                icon: 'el-icon-user',
+                index: 'forceclubmanager',
+                title: '强制干预社团'
+              },
+            ]
           },
           {
             icon: 'el-icon-s-tools',
@@ -97,12 +126,6 @@
                 index: 'recoverpwd',
                 title: '修改密码'
               },
-              // {
-              //   icon: 'el-icon-film',
-              //   index: 'userfile',
-              //   title: '用户资料'
-              // },
-
             ]
           },
         ]

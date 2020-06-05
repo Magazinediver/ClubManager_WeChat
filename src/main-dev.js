@@ -4,7 +4,10 @@ import router from './router'
 import 'bootstrap'
 import $ from 'jquery'
 import ElementUI from 'element-ui';
+import echarts from 'echarts'
 import './assets/css/icon.css';
+import './assets/stylesheets/js/bluepurple.js'
+import './assets/stylesheets/js/essos.js'
 import './element-variables.scss'
 import store from "./store";
 Vue.use(ElementUI, {

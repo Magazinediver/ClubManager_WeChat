@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="container-main">
     <!-- 头部 -->
     <el-header>
       <v-header></v-header>
@@ -11,7 +11,15 @@
       <v-sidebar></v-sidebar>
       <!-- 内容主体 -->
       <el-main class="content-box" :class="{'content-collapse':collapse}" style="padding: 0px;">
-        <router-view></router-view>
+        <v-tags></v-tags>
+        <div class="content">
+          <transition name="move" mode="out-in">
+            <keep-alive :include="tagsList">
+              <router-view></router-view>
+            </keep-alive>
+          </transition>
+          <el-backtop target=".content"></el-backtop>
+        </div>
       </el-main>
 
 
@@ -24,16 +32,19 @@
   import vSidebar from './sidebar/Sidebar.vue';
   import vHeader from './header/Header'
   import bus from '../assets/javascript/bus.js';
+  import vTags from "./Tags";
 export default {
   components:{
     vSidebar,
-    vHeader
+    vHeader,
+    vTags
   },
   data () {
     return {
       // 默认不折叠
       collapse: false,
       // 被激活导航地址
+      tagsList: [],
     }
   },
   computed: {
@@ -42,6 +53,15 @@ export default {
   created () {
     bus.$on('collapse-content', msg => {
       this.collapse = msg;
+    });
+
+    // 只有在标签页列表里的页面才使用keep-alive，即关闭标签之后就不保存到内存中了。
+    bus.$on('tags', msg => {
+      let arr = [];
+      for (let i = 0, len = msg.length; i < len; i++) {
+        msg[i].name && arr.push(msg[i].name);
+      }
+      this.tagsList = arr;
     });
   },
   methods: {
@@ -52,13 +72,18 @@ export default {
 
 
 <style lang="less" scoped>
-
-  .el-scrollbar__wrap
-  {
-    overflow-x:hidden;
-    overflow-y:hidden;
+  .container-main{
+    overflow: hidden;
   }
 
+  .content-box{
+    overflow: hidden;
+  }
+
+  .content{
+    padding: 0;
+    overflow: scroll;
+  }
 
 .el-container {
   height: 100%;

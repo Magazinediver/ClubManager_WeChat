@@ -8,7 +8,10 @@ import './assets/css/global.css'
 // 导入字体图标
 import './assets/fonts/iconfont.css'
 // 导入表格树
+import echarts from 'echarts'
 import TreeTable from 'vue-table-with-tree-grid'
+import './assets/stylesheets/js/bluepurple.js'
+import './assets/stylesheets/js/essos.js'
 // 导入富文本编辑器
 import VueQuillEditor from 'vue-quill-editor'
 // 导入富文本编辑器样式
