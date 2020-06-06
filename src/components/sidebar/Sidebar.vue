@@ -86,7 +86,12 @@
                 icon: 'el-icon-setting',
                 index: 'editclub',
                 title: '编辑社团'
-              }
+              },
+              {
+                icon: 'el-icon-setting',
+                index: 'dismissclub',
+                title: '解散社团'
+              },
             ]
           },
           {

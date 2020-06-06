@@ -46,9 +46,12 @@
   import bus from '../../assets/javascript/bus.js';
   export default {
     name: "Header",
+    created() {
+      this.username = this.$store.state.name
+    },
     data(){
       return{
-        username: '黄科烨',
+        username: '',
         fullscreen: false,
         collapse: false,
       }

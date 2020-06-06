@@ -8,7 +8,8 @@ const store = new Vuex.Store({
   state:{
     //数据,state中的数据是响应式的(一开始就初始化好的,如果一开始没有定义属性，没有加入到响应式系统，就不会是响应式的)
     query : '',
-
+    name : '黄驿涵',
+    id : '31701074'
   },
   mutations:{
     //方法,不建议在里面进行异步操作，用action进行替代

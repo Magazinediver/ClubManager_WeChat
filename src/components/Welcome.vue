@@ -12,17 +12,9 @@
               <div class="user-info-identity">{{identity}}</div>
             </div>
           </div>
-          <div class="create-button" @click="createClub">
+          <div class="create-button" @click="handleEdit">
             创建社团
           </div>
-<!--          <div class="user-info-list">-->
-<!--            上次登录时间：-->
-<!--            <span>2019-11-01</span>-->
-<!--          </div>-->
-<!--          <div class="user-info-list">-->
-<!--            上次登录地点：-->
-<!--            <span>东莞</span>-->
-<!--          </div>-->
         </el-card>
         <el-card shadow="hover" style="height:55vh; margin-top: 20px">
           <div slot="header" class="clearfix">
@@ -68,6 +60,65 @@
       </el-col>
     </el-row>
 
+    <el-dialog title="创建社团" :visible.sync="editVisible" width="40vw">
+      <el-form ref="form" :rules="rules" :model="form" label-width="90px">
+        <el-form-item label="学号/工号">
+          <el-col :span="16">
+            <el-input :disabled="true" v-model="form.id"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="用户名">
+          <el-col :span="16">
+            <el-input :disabled="true" v-model="form.name"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="社团名" prop="clubname">
+          <el-col :span="16">
+            <el-input v-model="form.clubname"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="社团地点" prop="address">
+          <el-select v-model="form.address" placeholder="请选择活动区域">
+            <el-option v-for="(item,index) in address" :key="index" :label="item" :value="item"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="社团公告" prop="notice">
+          <el-col :span="16">
+            <el-input v-model="form.notice"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="社团类型" prop="type">
+          <el-radio-group v-model="form.type" size="small">
+            <el-radio-button label="兴趣"></el-radio-button>
+            <el-radio-button label="游戏"></el-radio-button>
+            <el-radio-button label="艺术"></el-radio-button>
+            <el-radio-button label="组织"></el-radio-button>
+            <el-radio-button label="志愿"></el-radio-button>
+            <el-radio-button label="动漫"></el-radio-button>
+            <el-radio-button label="学术"></el-radio-button>
+            <el-radio-button label="运动"></el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="社团海报">
+          <el-upload
+            class="upload-demo"
+            drag
+            action="http://jsonplaceholder.typicode.com/api/posts/"
+            multiple>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="社团描述" prop="describe">
+          <el-input type="textarea" v-model="form.describe"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 
 </template>
@@ -81,12 +132,16 @@ import ActivityType from "./pie/ActivityType";
 export default {
   components: {ActivityType, ClubType},
   // 此时,页面上的元素,已经被渲染完毕了
-
+  created() {
+    this.form.id = this.$store.state.id
+    this.form.name = this.$store.state.name
+    // console.log(this.$store.state.id)
+    // console.log(this.$store.state.name)
+    // console.log(this.form.id)
+    // console.log(this.form.name)
+  },
   data(){
     return{
-      queryInfo:{
-
-      },
       editVisible: false,
       name: '黄驿涵',
       identity: '超级管理员',
@@ -106,6 +161,45 @@ export default {
         'https://ae01.alicdn.com/kf/H54672b9fa07e49e58b06b6c37eeb5f1fh.jpg',
         'https://ae01.alicdn.com/kf/H2fde6e4069784393b181e707710fa673b.jpg',
       ],
+      address:[
+        '理四201',
+        '理四301',
+        '理四401',
+        '理四410',
+        '理四404',
+        '理四230',
+        '理四321',
+        '理四218',
+        '理四420',
+      ],
+      form:{
+        id:'',
+        name:'',
+        clubname:'',
+        poster:'',
+        type:'',
+        describe:'',
+        address:'',
+        notice:''
+      },
+      rules: {
+        clubname: [
+          { required: true, message: '请输入社团名称', trigger: 'blur' },
+          { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
+        ],
+        address: [
+          { required: true, message: '请选择社团据点', trigger: 'change' }
+        ],
+        type: [
+          {required: true, message: '请选择社团种类', trigger: 'change'}
+        ],
+        notice: [
+          { required: true, message: '请填写社团公告', trigger: 'blur' }
+        ],
+        describe: [
+          { required: true, message: '请填写社团描述', trigger: 'blur' }
+        ]
+      }
     }
   },
   methods:{
@@ -113,36 +207,39 @@ export default {
       this.editVisible = true;
     },
     // 保存编辑
-    saveEdit() {
-      this.editVisible = false;
-      this.$message.success(`社团创建申请提交成功`);
-      this.getData()
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.editVisible = false;
+          this.createClub()
+          alert('提交申请!');
+        } else {
+          alert('表单填写有误!!');
+          return false;
+        }
+      });
     },
     async getData(){
-      const { data: res } = await this.$http.get('/bilibili/query/history', {
+      const { data: res } = await this.$http.get('/clubmanage/homepage', {
       })
       if (res.meta.status !== 200) {
         return this.$message.error('获取搜索结果失败！')
       }
-      this.historylist.daily = res.data.daily
-      this.historylist.history = res.data.history
-      if(res.data.history !== null){
-        this.queryInfo.isSetHisNull = 'false'
-      }
+      // this.historylist.daily = res.data.daily
+      // this.historylist.history = res.data.history
+      // if(res.data.history !== null){
+      //   this.queryInfo.isSetHisNull = 'false'
+      // }
     },
 
     async createClub(){
-      const { data: res } = await this.$http.get('/bilibili/query/history', {
+      const { data: res } = await this.$http.get('/clubmanage/creatclub', {
         params: this.queryInfo
       })
       if (res.meta.status !== 200) {
         return this.$message.error('获取搜索结果失败！')
       }
-      this.historylist.daily = res.data.daily
-      this.historylist.history = res.data.history
-      if(res.data.history !== null){
-        this.queryInfo.isSetHisNull = 'false'
-      }
+      this.$message.success(`社团创建申请提交成功`);
     },
   }
 }
@@ -253,6 +350,15 @@ export default {
   .create-button:active{
     border: 1px solid #fff;
     font-size: 19px;
+  }
+
+  .el-upload__input {
+    display: none!important;
+  }
+
+  .el-upload__tip{
+    line-height: 12px;
+    margin-top: 0px;
   }
 
 </style>

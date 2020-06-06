@@ -14,6 +14,7 @@ const ClubMember = () => import(/* webpackChunkName: "ClubMember" */ '../compone
 const CreateActivity = () => import(/* webpackChunkName: "CreateActivity" */ "../components/clubmanager/CreateActivity");
 const EditActivity = () => import(/* webpackChunkName: "EditActivity" */ "../components/clubmanager/EditActivity");
 const EditClub = () => import(/* webpackChunkName: "EditClub" */ "../components/clubmanager/EditClub");
+const DismissClub = () => import(/* webpackChunkName: "DismissClub" */ "../components/clubmanager/DismissClub");
 
 //审核模块子目录
 const CheckActivity = () => import(/* webpackChunkName: "CheckActivity" */ '../components/check/CheckActivity')
@@ -41,6 +42,7 @@ const routes = [
       { path: '/actapplication', component: CreateActivity, meta: { title: '创建活动' }},
       { path: '/editactivity', component: EditActivity, meta: { title: '编辑活动' }},
       { path: '/editclub', component: EditClub, meta: { title: '编辑社团' }},
+      { path: '/dismissclub', component: DismissClub, meta: { title: '解散社团' }},
 
       { path: '/checkclub', component: CheckClub, meta: { title: '社团审核' }},
       { path: '/checkactivity', component: CheckActivity, meta: { title: '活动审核' }},

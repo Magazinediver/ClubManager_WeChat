@@ -109,3 +109,7 @@ li .el-menu-item{
 .el-card__body{
     padding: 0!important;
 }
+
+.el-upload__input {
+    display: none!important;
+}
