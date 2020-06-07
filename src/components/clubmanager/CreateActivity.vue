@@ -166,12 +166,12 @@
         if (res.meta.status !== 200) {
           return this.$message.error('获取搜索结果失败！')
         }
-        // this.historylist.daily = res.data.daily
-
+        this.address = res.data.address
+        this.$message.success('获取活动申请表数据成功！')
       },
       async createActivity() {
         const { data: res } = await this.$http.get('/clubmanage/creatactivity', {
-          params: this.queryInfo
+          params: this.form
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取搜索结果失败！')
@@ -179,7 +179,7 @@
         this.$message.success(`活动创建申请提交成功`);
       },
       resetForm(formName) {
-        console.log(1111)
+        // console.log(1111)
         this.$refs[formName].resetFields();
       }
     }

@@ -9,10 +9,11 @@
             <img src="~assets/images/avator_1.jpeg" class="user-avator" alt />
             <div class="user-info-cont">
               <div class="user-info-name">{{name}}</div>
+              <div class="user-info-id">{{id}}</div>
               <div class="user-info-identity">{{identity}}</div>
             </div>
           </div>
-          <div class="create-button" @click="handleEdit">
+          <div v-if="identity === '普通用户' || identity === '管理员'" class="create-button" @click="handleEdit">
             创建社团
           </div>
         </el-card>
@@ -37,9 +38,7 @@
         <el-card shadow="hover" class="card-swiper">
           <el-carousel  type="card" height="40vh" :interval="5000" arrow="always">
             <el-carousel-item v-for="(item,index) in pic" :key="index">
-<!--              <div class="img-container" style="width: 100%;height: 100%">-->
-                <img style="display: block;text-align: center;margin: 0 auto;width:100%;height:100%;object-fit: fill" :src="item">
-<!--              </div>-->
+              <img style="display: block;text-align: center;margin: 0 auto;width:100%;height:100%;object-fit: fill" :src="item">
             </el-carousel-item>
           </el-carousel>
         </el-card>
@@ -60,8 +59,10 @@
       </el-col>
     </el-row>
 
+
+
     <el-dialog title="创建社团" :visible.sync="editVisible" width="40vw">
-      <el-form ref="form" :rules="rules" :model="form" label-width="90px">
+      <el-form ref="createClubForm" :rules="rules" :model="form" label-width="90px">
         <el-form-item label="学号/工号">
           <el-col :span="16">
             <el-input :disabled="true" v-model="form.id"></el-input>
@@ -116,7 +117,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+        <el-button type="primary" @click="submitForm('createClubForm')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -135,16 +136,17 @@ export default {
   created() {
     this.form.id = this.$store.state.id
     this.form.name = this.$store.state.name
-    // console.log(this.$store.state.id)
-    // console.log(this.$store.state.name)
-    // console.log(this.form.id)
-    // console.log(this.form.name)
+    this.id = this.$store.state.id
+    this.name = this.$store.state.name
+    this.identity = this.$store.state.identity
+    this.getData()
   },
   data(){
     return{
       editVisible: false,
-      name: '黄驿涵',
-      identity: '超级管理员',
+      id: '',
+      name: '',
+      identity: '',
       todoList: [
         {
           title: '社团招新活动将在6月20号举办',
@@ -205,6 +207,7 @@ export default {
   methods:{
     handleEdit() {
       this.editVisible = true;
+
     },
     // 保存编辑
     submitForm(formName) {
@@ -212,7 +215,7 @@ export default {
         if (valid) {
           this.editVisible = false;
           this.createClub()
-          alert('提交申请!');
+          alert('社团创建申请提交成功!');
         } else {
           alert('表单填写有误!!');
           return false;
@@ -225,16 +228,18 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error('获取搜索结果失败！')
       }
-      // this.historylist.daily = res.data.daily
-      // this.historylist.history = res.data.history
-      // if(res.data.history !== null){
-      //   this.queryInfo.isSetHisNull = 'false'
-      // }
+      //取得轮播图图片
+      this.pic = res.data.pic
+      //取得公告栏信息
+      this.todoList = res.data.todoList
+      //取得社团创建表单得地址选项
+      this.address = res.data.address
     },
+
 
     async createClub(){
       const { data: res } = await this.$http.get('/clubmanage/creatclub', {
-        params: this.queryInfo
+        params: this.form
       })
       if (res.meta.status !== 200) {
         return this.$message.error('获取搜索结果失败！')
@@ -274,7 +279,7 @@ export default {
   }
 
   .user-info-cont {
-    padding-left: 2.5vw;
+    padding-left: 2vw;
     flex: 1;
     font-size: 14px;
     color: #999;
@@ -282,11 +287,20 @@ export default {
 
   .user-info-name {
     font-size: 3.5vh;
+    line-height: 3.5vh;
     color: #222;
   }
 
+  .user-info-id{
+    font-size: 15px;
+    line-height: 15px;
+    margin-top: 4px;
+  }
+
   .user-info-identity{
-    margin-top: 5px;
+    font-size: 15px;
+    line-height: 15px;
+    margin-top: 4px;
   }
 
   .user-info-list {

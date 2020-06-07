@@ -1,21 +1,22 @@
 <template>
   <div class="">
-    <div class="head">活动审核</div>
+    <div class="head">社团审核</div>
     <div class="check-container">
       <el-tabs v-model="message">
         <el-tab-pane :label="`未审申请(${unread.length})`" name="first">
-          <el-table :data="unread" :show-header="false" style="width: 100%">
+
+          <el-table :data="unread">
             <el-table-column type="index" label="#"></el-table-column>
-            <el-table-column width="200">
+            <el-table-column width="150">
               <template slot-scope="scope">
                 <span class="message-title">{{scope.row.clubname}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="type" width="150" label="社团类型"></el-table-column>
-            <el-table-column prop="address" width="150" label="社团地点"></el-table-column>
-            <el-table-column prop="notice" width="150" label="社团公告"></el-table-column>
-            <el-table-column prop="describe" label="活动简介"></el-table-column>
-            <el-table-column prop="date" width="180"></el-table-column>
+            <el-table-column prop="type" width="100" label="社团类型"></el-table-column>
+            <el-table-column prop="address" width="100" label="社团地点"></el-table-column>
+            <el-table-column prop="notice"  label="社团公告"></el-table-column>
+            <el-table-column prop="describe" label="社团描述"></el-table-column>
+<!--            <el-table-column prop="date" width="180"></el-table-column>-->
             <el-table-column width="300">
               <template slot-scope="scope">
                 <el-button type="primary" size="small" @click="handleKnowMore(scope.$index,scope.row)">查看详情</el-button>
@@ -29,16 +30,17 @@
           <template v-if="message === 'second'">
             <el-table :data="read" :show-header="false" style="width: 100%">
               <el-table-column type="index" label="#"></el-table-column>
-              <el-table-column width="200">
+              <el-table-column width="150">
                 <template slot-scope="scope">
                   <span class="message-title">{{scope.row.clubname}}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="type" width="150" label="活动类型"></el-table-column>
-              <el-table-column prop="address" width="150" label="活动地点"></el-table-column>
-              <el-table-column prop="contact" width="200" label="联系人"></el-table-column>
-              <el-table-column prop="introduce" label="活动简介"></el-table-column>
-              <el-table-column prop="date" width="180"></el-table-column>
+              <el-table-column prop="type" width="100" label="社团类型"></el-table-column>
+              <el-table-column prop="address" width="100" label="社团地点"></el-table-column>
+              <el-table-column prop="notice"  label="社团公告"></el-table-column>
+              <el-table-column prop="describe" label="社团描述"></el-table-column>
+              <!--            <el-table-column prop="date" width="180"></el-table-column>-->
+
               <el-table-column width="200">
                 <template slot-scope="scope">
                   <el-button type="primary" size="small" @click="handleKnowMore(scope.$index,scope.row)">查看详情</el-button>
@@ -167,13 +169,11 @@
         this.form.id = this.$store.state.id
         this.form.name = this.$store.state.name
         this.form.clubname = row.clubname
-        this.form.contact = row.contact
         this.form.poster = row.poster
         this.form.type = row.type
         this.form.address = row.address
-        this.form.introduce = row.introduce
-        this.form.attention = row.attention
-        this.form.date = row.date
+        this.form.notice = row.notice
+        this.form.describe = row.describe
 
         this.editVisible = true;
       },
@@ -188,7 +188,7 @@
         this.unread = res.data.unread
       },
       async checkclub() {
-        const { data: res } = await this.$http.get('/clubmanage/deleteactivity', {
+        const { data: res } = await this.$http.get('/clubmanage/checkclub', {
           params: this.deleteid
         })
         console.log(res.meat.status)
@@ -256,6 +256,7 @@
   .club-container{
     position: relative;
     display: flex;
+    align-items: center;
   }
 
   .poster{
@@ -266,18 +267,17 @@
 
   .club-text{
     flex: 1;
-    padding: 100px 30px;
+    padding: 0px 30px;
     width: 40%;
   }
 
   .club-name{
-    font-size: 40px;
+    font-size: 3.5vh;
     color: #222;
     line-height: 40px;
   }
 
   .club-info{
-    margin-left: 10px;
     margin-top: 20px;
     font-size: 15px;
   }

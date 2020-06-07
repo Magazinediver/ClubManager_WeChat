@@ -31,9 +31,9 @@
                   <label>Password / 密码</label>
                   <el-input type="password" v-model="addUserForm.password"></el-input>
                 </el-form-item>
-                <el-form-item class="col-sm-6 mb-lg" prop="mobile">
+                <el-form-item class="col-sm-6 mb-lg" prop="id">
                   <label>ID / 学号or工号</label>
-                  <el-input v-model="addUserForm.mobile"></el-input>
+                  <el-input v-model="addUserForm.id"></el-input>
                 </el-form-item>
               </div>
             </div>
@@ -74,7 +74,7 @@
   export default {
     name: "signup",
     data(){
-      // 自定义邮箱规则
+      // 邮箱规则
       var checkEmail = (rule, value, callback) => {
         const regEmail = /^\w+@\w+(\.\w+)+$/
         if (regEmail.test(value)) {
@@ -83,15 +83,15 @@
         }
         callback(new Error('请输入合法邮箱'))
       }
-      // 自定义手机号规则
-      var checkMobile = (rule, value, callback) => {
-        const regMobile = /^1[34578]\d{9}$/
-        if (regMobile.test(value)) {
-          return callback()
-        }
-        // 返回一个错误提示
-        callback(new Error('请输入合法的手机号码'))
-      }
+      // 学号规则
+      // var checkId = (rule, value, callback) => {
+      //   const regId = /^1[34578]\d{9}$/
+      //   if (regId.test(value)) {
+      //     return callback()
+      //   }
+      //   // 返回一个错误提示
+      //   callback(new Error('请输入合法的手机号码'))
+      // }
       return {
         addUserForm: {
           username: '',
@@ -124,9 +124,10 @@
             { required: true, message: '请输入邮箱', trigger: 'blur' },
             { validator: checkEmail, trigger: 'blur' }
           ],
-          mobile: [
-            { required: true, message: '请输入手机号码', trigger: 'blur' },
-            { validator: checkMobile, trigger: 'blur' }
+          id: [
+            { required: true, message: '请输入学号/工号', trigger: 'blur' },
+            { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' }
+            // { validator: checkId, trigger: 'blur' }
           ]
         },
       }
@@ -139,12 +140,13 @@
         this.$refs.addUserFormRef.validate(async valid => {
           // console.log(valid)
           if (!valid){
-            return this.$message.error('填写的内容非法！')
+            this.$message.error('填写的内容非法！')
             return false
           }
-          const {data: res} = await this.$http.post('/bilibili/user/register/', this.addUserForm)
+          const {data: res} = await this.$http.post('/clubmanage/user/register/', this.addUserForm)
           if (res.meta.status !== 200) {
-            return this.$message.error('注册用户失败！')
+            this.$message.error('注册用户失败！')
+            return false
           }
           this.$message.success('注册成功')
           this.$router.replace('/login')

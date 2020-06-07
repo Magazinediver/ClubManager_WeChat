@@ -196,6 +196,17 @@
           // 每页显示多少数据
           pagesize: 4,
         },
+        address:[
+          '理四201',
+          '理四301',
+          '理四401',
+          '理四410',
+          '理四404',
+          '理四230',
+          '理四321',
+          '理四218',
+          '理四420',
+        ],
         activitylist: [
           {
             activityname: '社团招新',
@@ -269,14 +280,15 @@
         this.$router.push('/home');
       },
       async getactivitylist() {
-        const { data: res } = await this.$http.get('/clubmanage/member', {
+        const { data: res } = await this.$http.get('/clubmanage/editactivitypage', {
           params: this.queryInfo
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取用户列表失败！')
         }
-        this.activitylist = res.data
-        this.total = res.total
+        this.address = res.data.address
+        this.activitylist = res.data.activitylist
+        this.total = res.data.total
       },
 
       async deleteactivity () {

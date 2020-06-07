@@ -73,6 +73,7 @@
 export default {
   data () {
     return {
+      //登录认证表单
       loginForm: {
         // username: 'admin',
         // password: '123456'
@@ -93,34 +94,40 @@ export default {
     }
   },
   methods: {
+    //注册点击事件
     postOpenPlatform(){
+      //点击注册后的跳转
       this.$router.replace('/signup')
-      // this.$router.replace('/login')
     },
     // 表单重置按钮
     resetLoginForm () {
-      // console.log(this)
-      // resetFields：element-ui提供的表单方法
+      // resetFields：element-ui提供的表单重置方法
       this.$refs.loginFormRef.resetFields()
     },
     login () {
-      // 表单预验证
-      // valid：bool类型,用于预验证输入内容是否合法
+      // 表单预验证，valid：bool类型,用于预验证输入内容是否合法
       this.$refs.loginFormRef.validate(async valid => {
-        // console.log(valid)
         if (!valid) return false
-        // this.$http.post('login', this.loginForm): 返回值为promise
-        // 返回值为promise，可加await简化操作 相应的也要加async
-        const { data: res } = await this.$http.post('/bilibili/user/login', this.loginForm)
+        // this.$http.post('login', this.loginForm): 返回值为promise，包裹请求，用await简化操作 同时加async
+        const { data: res } = await this.$http.post('/clubmanage/user/login',
+          this.loginForm
+        )
         // console.log(res)
-        if (res.meta.status !== 200) return this.$message.error('登录失败')
+        if (res.meta.status !== 200)
+          return this.$message.error('登录失败')
         this.$message.success('登录成功')
-        // 1、将登陆成功之后的token, 保存到客户端的sessionStorage中; localStorage中是持久化的保存
-        //   1.1 项目中出现了登录之外的其他API接口，必须在登陆之后才能访问
-        //   1.2 token 只应在当前网站打开期间生效，所以将token保存在sessionStorage中
+        //一、将登陆成功之后的token, 保存到客户端的sessionStorage中; localStorage中是持久化的保存
+        //  1.项目中出现了登录之外的其他API接口，必须在登陆之后才能访问
+        //  2.token 只应在当前网站打开期间生效，所以将token保存在sessionStorage中
         window.sessionStorage.setItem('token', res.data.token)
-        // 2、通过编程式导航跳转到后台主页, 路由地址为：/home
-        this.$router.push('/home')
+
+        //二、将登陆用户的信息存入vuex，随取随用
+        this.$store.state.id = res.data.userid
+        this.$store.state.name = res.data.name
+        this.$store.state.identity = res.data.identity
+
+        //三、跳转到主页, 路由地址为：/home
+        this.$router.push('/welcome')
       })
     }
   }

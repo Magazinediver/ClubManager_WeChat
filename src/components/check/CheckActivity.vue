@@ -4,18 +4,18 @@
     <div class="check-container">
       <el-tabs v-model="message">
         <el-tab-pane :label="`未审申请(${unread.length})`" name="first">
-          <el-table :data="unread" :show-header="false" style="width: 100%">
+          <el-table :data="unread">
             <el-table-column type="index" label="#"></el-table-column>
-            <el-table-column width="200">
+            <el-table-column>
               <template slot-scope="scope">
                 <span class="message-title">{{scope.row.activityname}}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="type" width="150" label="活动类型"></el-table-column>
-            <el-table-column prop="address" width="150" label="活动地点"></el-table-column>
-            <el-table-column prop="contact" width="200" label="联系人"></el-table-column>
+            <el-table-column prop="type" width="120" label="活动类型"></el-table-column>
+            <el-table-column prop="address" width="120" label="活动地点"></el-table-column>
+            <el-table-column prop="contact" label="联系人"></el-table-column>
             <el-table-column prop="introduce" label="活动简介"></el-table-column>
-            <el-table-column prop="date" width="180"></el-table-column>
+            <el-table-column prop="date"></el-table-column>
             <el-table-column width="300">
               <template slot-scope="scope">
                 <el-button type="primary" size="small" @click="handleKnowMore(scope.$index,scope.row)">查看详情</el-button>
@@ -27,18 +27,18 @@
         </el-tab-pane>
         <el-tab-pane :label="`已读消息(${read.length})`" name="second">
           <template v-if="message === 'second'">
-            <el-table :data="read" :show-header="false" style="width: 100%">
+            <el-table :data="read">
               <el-table-column type="index" label="#"></el-table-column>
-              <el-table-column width="200">
+              <el-table-column>
                 <template slot-scope="scope">
                   <span class="message-title">{{scope.row.activityname}}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="type" width="150" label="活动类型"></el-table-column>
-              <el-table-column prop="address" width="150" label="活动地点"></el-table-column>
-              <el-table-column prop="contact" width="200" label="联系人"></el-table-column>
+              <el-table-column prop="type" width="120" label="活动类型"></el-table-column>
+              <el-table-column prop="address" width="120" label="活动地点"></el-table-column>
+              <el-table-column prop="contact" label="联系人"></el-table-column>
               <el-table-column prop="introduce" label="活动简介"></el-table-column>
-              <el-table-column prop="date" width="180"></el-table-column>
+              <el-table-column prop="date"></el-table-column>
               <el-table-column width="200">
                 <template slot-scope="scope">
                   <el-button type="primary" size="small" @click="handleKnowMore(scope.$index,scope.row)">查看详情</el-button>
@@ -52,7 +52,7 @@
     </div>
 
 
-    <el-dialog class="card" title="编辑活动" :visible.sync="editVisible" width="40vw">
+    <el-dialog class="card" title="活动详情" :visible.sync="editVisible" width="40vw">
       <div class="act-container">
         <img class="poster" :src="this.form.poster" alt="">
         <div class="act-text">
@@ -128,7 +128,7 @@
             type: '学术创新',
             address:'理四401',
             contact:'王靖平 17315622345',
-            introduce: '这是一个很虎虎虎虎虎虎的活动',
+            introduce: '这是一个很虎虎虎虎虎虎斤斤计较急急急急急急急急急急急急急急急啊啊啊啊啊啊的活动',
             attention: '这个活动只有群众才能jijijijjij参加',
             status: '已过期',
           }
@@ -265,6 +265,7 @@
 
   .act-container{
     display: flex;
+    align-items: center;
   }
 
   .poster{
@@ -275,12 +276,12 @@
 
   .act-text{
     flex: 1;
-    padding: 60px 30px;
+    padding: 0 30px;
     width: 40%;
   }
 
   .act-name{
-    font-size: 40px;
+    font-size: 3.5vh;
     color: #222;
     line-height: 40px;
   }

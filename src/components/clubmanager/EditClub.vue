@@ -7,7 +7,7 @@
       </div>
       <div class="form-title">社团变更申请表</div>
       <el-divider content-position="left">浙江大学城市学院</el-divider>
-      <el-form class="editClubForm" ref="form" :rules="rules" :model="form" label-width="90px">
+      <el-form class="editClubForm" ref="editClubForm" :rules="rules" :model="form" label-width="90px">
         <el-form-item label="学号/工号">
           <el-col :span="16">
             <el-input :disabled="true" v-model="form.id"></el-input>
@@ -64,8 +64,8 @@
       </el-form>
 
       <div class="footer">
-        <el-button type="primary" @click="submitForm('createActForm')">确 定</el-button>
-        <el-button @click="resetForm('createActForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('editClubForm')">确 定</el-button>
+        <el-button @click="resetForm('editClubForm')">重置</el-button>
       </div>
 
     </div>
@@ -91,16 +91,7 @@
           address:'xxxxxxxxxxxxxx',
           notice:'xxxxxxxxxxxxxxxxx'
         },
-        // form:{
-        //   id:'',
-        //   name:'',
-        //   clubname:'',
-        //   poster:'',
-        //   type:'',
-        //   describe:'',
-        //   address:'',
-        //   notice:''
-        // },
+
         address:[
           '理四201',
           '理四301',
@@ -146,19 +137,20 @@
         });
       },
 
-      //获取活动地址
+      //获取社团地址
       async getData(){
-        const { data: res } = await this.$http.get('/clubmanage/activitypage', {
+        const { data: res } = await this.$http.get('/clubmanage/editclubpage', {
           params: this.form
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取搜索结果失败！')
         }
+        this.address = res.data.address
         this.form = res.data.form
 
       },
       async editClub() {
-        const { data: res } = await this.$http.get('/clubmanage/creatactivity', {
+        const { data: res } = await this.$http.get('/clubmanage/editclub', {
           params: this.form
         })
         if (res.meta.status !== 200) {

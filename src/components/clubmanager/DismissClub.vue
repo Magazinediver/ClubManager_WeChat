@@ -5,9 +5,9 @@
       <div class="logo">
         <img src="../../assets/images/zucc_grey.png" alt="">
       </div>
-      <div class="form-title">社团变更申请表</div>
+      <div class="form-title">社团解散申请表</div>
       <el-divider content-position="left">浙江大学城市学院</el-divider>
-      <el-form class="dismissClubForm" ref="form" :rules="rules" :model="form" label-width="90px">
+      <el-form class="dismissClubForm" ref="dismissClubForm" :rules="rules" :model="form" label-width="90px">
         <el-form-item label="学号/工号">
           <el-col :span="16">
             <el-input :disabled="true" v-model="form.id"></el-input>
@@ -32,8 +32,8 @@
       </el-form>
 
       <div class="footer">
-        <el-button type="primary" @click="submitForm('createActForm')">确 定</el-button>
-        <el-button @click="resetForm('createActForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('dismissClubForm')">确 定</el-button>
+        <el-button @click="resetForm('dismissClubForm')">重置</el-button>
       </div>
 
     </div>
@@ -73,8 +73,11 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.editVisible = false;
-            this.editClub()
-            alert('提交申请!');
+            this.dismissClub()
+            alert('提交申请!请重新登陆');
+
+            window.sessionStorage.clear()
+            this.$router.push('/login');
           } else {
             alert('表单填写有误!!');
             return false;
@@ -82,25 +85,14 @@
         });
       },
 
-      //获取活动地址
-      async getData(){
-        const { data: res } = await this.$http.get('/clubmanage/activitypage', {
+      async dismissClub() {
+        const { data: res } = await this.$http.get('/clubmanage/dismissclub', {
           params: this.form
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取搜索结果失败！')
         }
-        this.form = res.data.form
-
-      },
-      async editClub() {
-        const { data: res } = await this.$http.get('/clubmanage/creatactivity', {
-          params: this.form
-        })
-        if (res.meta.status !== 200) {
-          return this.$message.error('获取搜索结果失败！')
-        }
-        this.$message.success(`活动创建申请提交成功`);
+        this.$message.success(`社团解散提交成功`);
       },
       resetForm(formName) {
         console.log(1111)

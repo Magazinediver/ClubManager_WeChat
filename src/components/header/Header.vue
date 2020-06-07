@@ -26,7 +26,7 @@
           <i class="el-icon-caret-bottom"></i>
         </span>
             <el-dropdown-menu slot="dropdown">
-              <a style="text-decoration: none" href="https://github.com/Magazinediver/bilibilisearch.git" target="_blank">
+              <a style="text-decoration: none" href="https://github.com/Magazinediver/ClubManager_WeChat" target="_blank">
                 <el-dropdown-item>项目仓库</el-dropdown-item>
               </a>
               <el-dropdown-item divided command="logout">退出登录</el-dropdown-item>
@@ -48,10 +48,12 @@
     name: "Header",
     created() {
       this.username = this.$store.state.name
+      this.identity = this.$store.state.identity
     },
     data(){
       return{
         username: '',
+        identity: '',
         fullscreen: false,
         collapse: false,
       }

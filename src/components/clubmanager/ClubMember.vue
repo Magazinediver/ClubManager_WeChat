@@ -7,7 +7,7 @@
       <el-row :gutter="20">
 
         <el-col :span="14">
-          <el-input placeholder="请输入你想查询的up主" v-model="queryInfo.query" clearable @clear="getmemberlist" @keyup.enter.native="getmemberlist">
+          <el-input placeholder="请输入你想查询的成员" v-model="queryInfo.query" clearable @clear="getmemberlist" @keyup.enter.native="getmemberlist">
             <el-button class="upsearch" slot="append" icon="el-icon-search" @click="getmemberlist"></el-button>
           </el-input>
         </el-col>
@@ -134,18 +134,18 @@ export default {
       this.$router.push('/home');
     },
     async getmemberlist () {
-      const { data: res } = await this.$http.get('/bilibili/member', {
+      const { data: res } = await this.$http.get('/clubmanage/clubmember', {
         params: this.queryInfo
       })
       if (res.meta.status !== 200) {
         return this.$message.error('获取用户列表失败！')
       }
-      this.memberlist = res.data
-      this.total = res.total
+      this.memberlist = res.data.memberlist
+      this.total = res.data.total
     },
 
     async deletemember () {
-      const { data: res } = await this.$http.get('/bilibili/deletemember', {
+      const { data: res } = await this.$http.get('/clubmanage/deletemember', {
         params: this.deleteid
       })
       console.log(res.meat.status)
@@ -156,7 +156,7 @@ export default {
     },
 
     async addmember () {
-      const { data: res } = await this.$http.get('/bilibili/addmember', {
+      const { data: res } = await this.$http.get('/clubmanage/addmember', {
         params: this.addid
       })
       console.log(res.meat.status)

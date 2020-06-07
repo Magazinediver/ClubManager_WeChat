@@ -112,7 +112,7 @@
               {
                 icon: 'el-icon-user',
                 index: 'forceclubmanager',
-                title: '强制干预社团'
+                title: '管理社团'
               },
             ]
           },

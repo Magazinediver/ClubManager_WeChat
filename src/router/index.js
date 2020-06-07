@@ -19,7 +19,7 @@ const DismissClub = () => import(/* webpackChunkName: "DismissClub" */ "../compo
 //审核模块子目录
 const CheckActivity = () => import(/* webpackChunkName: "CheckActivity" */ '../components/check/CheckActivity')
 const CheckClub = () => import(/* webpackChunkName: "CheckClub" */ "../components/check/CheckClub");
-const ForceClubManager = () => import(/* webpackChunkName: "ForceClubManager" */ "../components/check/ForceClubManager");
+const ForceClubManager = () => import(/* webpackChunkName: "ForceClubManager" */ "../components/check/ClubManager");
 
 
 const Signup = () => import(/* webpackChunkName: "Order_Report" */ '../components/user/Signup.vue')
@@ -46,7 +46,7 @@ const routes = [
 
       { path: '/checkclub', component: CheckClub, meta: { title: '社团审核' }},
       { path: '/checkactivity', component: CheckActivity, meta: { title: '活动审核' }},
-      { path: '/forceclubmanager', component: ForceClubManager, meta: { title: '强制干预社团' }},
+      { path: '/forceclubmanager', component: ForceClubManager, meta: { title: '管理社团' }},
 
       { path: '/recoverpwd', component: Recoverpwd, meta: { title: '修改密码' }},
       // { path: '/rank', component: Rank },
