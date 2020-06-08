@@ -140,7 +140,6 @@
       //获取社团地址
       async getData(){
         const { data: res } = await this.$http.get('/clubmanage/editclubpage', {
-          params: this.form
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取搜索结果失败！')
@@ -159,7 +158,7 @@
         this.$message.success(`活动创建申请提交成功`);
       },
       resetForm(formName) {
-        console.log(1111)
+        // console.log(1111)
         this.$refs[formName].resetFields();
       }
     }

@@ -295,7 +295,7 @@
         const { data: res } = await this.$http.get('/clubmanage/deleteactivity', {
           params: this.deleteid
         })
-        console.log(res.meat.status)
+        console.log(res.meta.status)
         if (res.meta.status !== 200) {
           return this.$message.error('删除社员失败！')
         }
@@ -303,10 +303,10 @@
       },
 
       async editactivity() {
-        const { data: res } = await this.$http.get('/bilibili/editactivity', {
+        const { data: res } = await this.$http.get('/clubmanage/editactivity', {
           params: this.form
         })
-        console.log(res.meat.status)
+        console.log(res.meta.status)
         if (res.meta.status !== 200) {
           return this.$message.error('添加社员失败！')
         }

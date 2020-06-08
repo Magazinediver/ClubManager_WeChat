@@ -138,7 +138,7 @@
         this.$router.push('/home');
       },
       async getclublist() {
-        const { data: res } = await this.$http.get('/clubmanage/member', {
+        const { data: res } = await this.$http.get('/clubmanage/forcemanage', {
           params: this.queryInfo
         })
         if (res.meta.status !== 200) {

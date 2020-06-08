@@ -24,10 +24,10 @@
                 label-width="0px"
                 class="reset_form"
               >
-                <el-form-item prop="username">
-                  <label style="color: #ff7700;margin-top: 5px;">Username / 用户昵称</label>
+                <el-form-item prop="id">
+                  <label style="color: #ff7700;margin-top: 5px;">ID / 学号/工号</label>
                   <el-input
-                    v-model="resetForm.username"
+                    v-model="resetForm.id"
                     prefix-icon="el-icon-user-solid">
                   </el-input>
                 </el-form-item>
@@ -76,15 +76,15 @@
     data() {
       return {
         resetForm: {
-          username: '',
+          id: '',
           password: '',
           cpassword: '',
         },
         // 表单验证
         resetFormRules: {
-          username: [
-            {required: true, message: '请输入用户名', trigger: 'blur'},
-            {min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur'}
+          id: [
+            { required: true, message: '请输入学号/工号', trigger: 'blur' },
+            { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' }
           ],
           password: [
             {required: true, message: '请输入旧密码', trigger: 'blur'},
@@ -114,7 +114,7 @@
           if (!valid) return false
           // this.$http.post('reset', this.resetForm): 返回值为promise
           // 返回值为promise，可加await简化操作 相应的也要加async
-          const {data: res} = await this.$http.post('/bilibili/reset', this.resetForm)
+          const {data: res} = await this.$http.post('/clubmanage/changpwd', this.resetForm)
           // console.log(res)
           if (res.meta.status !== 200) return this.$message.error('重置失败')
 

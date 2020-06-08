@@ -15,9 +15,9 @@
             ref="addUserFormRef"
             :rules="addUserFormRules"
           >
-            <el-form-item  class="form-group mb-lg" prop="username">
-              <label>Username / 用户昵称</label>
-              <el-input v-model="addUserForm.username"></el-input>
+            <el-form-item  class="form-group mb-lg" prop="id">
+              <label>ID / 学号or工号</label>
+              <el-input v-model.number="addUserForm.id"></el-input>
             </el-form-item>
 
             <el-form-item class="form-group mb-lg" prop="email">
@@ -31,9 +31,9 @@
                   <label>Password / 密码</label>
                   <el-input type="password" v-model="addUserForm.password"></el-input>
                 </el-form-item>
-                <el-form-item class="col-sm-6 mb-lg" prop="id">
-                  <label>ID / 学号or工号</label>
-                  <el-input v-model="addUserForm.id"></el-input>
+                <el-form-item class="col-sm-6 mb-lg" prop="name">
+                  <label>Name / 真实姓名</label>
+                  <el-input v-model="addUserForm.name"></el-input>
                 </el-form-item>
               </div>
             </div>
@@ -94,7 +94,7 @@
       // }
       return {
         addUserForm: {
-          username: '',
+          name: '',
           password: '',
           email: '',
           id: '',
@@ -102,14 +102,9 @@
         userlist: [],
         // 用户添加表单验证规则
         addUserFormRules: {
-          username: [
+          name: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
-            {
-              min: 2,
-              max: 10,
-              message: '用户名的长度在2～10个字',
-              trigger: 'blur'
-            }
+            { min: 2, max: 10, message: '用户名的长度在2～10个字', trigger: 'blur'}
           ],
           password: [
             { required: true, message: '请输入用户密码', trigger: 'blur' },
@@ -125,8 +120,10 @@
             { validator: checkEmail, trigger: 'blur' }
           ],
           id: [
-            { required: true, message: '请输入学号/工号', trigger: 'blur' },
-            { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' }
+            { required: true, message: '请输入学号/工号'},
+            { type: 'number',  message: '请输入纯数字'},
+            // { min: 5, max: 8, message: '长度在 5 到 8 个字符'},
+
             // { validator: checkId, trigger: 'blur' }
           ]
         },
@@ -143,7 +140,7 @@
             this.$message.error('填写的内容非法！')
             return false
           }
-          const {data: res} = await this.$http.post('/clubmanage/user/register/', this.addUserForm)
+          const {data: res} = await this.$http.post('/clubmanage/regist/', this.addUserForm)
           if (res.meta.status !== 200) {
             this.$message.error('注册用户失败！')
             return false

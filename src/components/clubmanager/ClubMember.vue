@@ -14,9 +14,9 @@
 
         <el-col :span="9" :offset="1">
           <el-radio-group @change="getRadioQuery" v-model="queryInfo.type">
-            <el-radio-button label="默认"></el-radio-button>
-            <el-radio-button label="注册时间 升"></el-radio-button>
-            <el-radio-button label="注册时间 降"></el-radio-button>
+            <el-radio-button label="全部"></el-radio-button>
+            <el-radio-button label="待审核"></el-radio-button>
+            <el-radio-button label="正式成员"></el-radio-button>
           </el-radio-group>
         </el-col>
       </el-row>
@@ -41,7 +41,7 @@
             ></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="registtime" label="注册时间"></el-table-column>
+        <el-table-column prop="appintime" label="申请/入社时间"></el-table-column>
 <!--        <el-table-column prop="Status" label="状态"></el-table-column>-->
         <el-table-column label="状态" align="center">
           <template slot-scope="scope">
@@ -87,8 +87,6 @@
 <script>
 export default {
   created() {
-    this.queryInfo.query = this.$store.state.query
-    console.log(this.queryInfo.query);
     this.getmemberlist()
   },
   data () {
@@ -109,14 +107,14 @@ export default {
           id:'31710074',
           name: '黄驿涵',
           face: 'https://ae01.alicdn.com/kf/H86c0411c10b04d158935b666780c77af4.jpg',
-          registtime: '2020-6-5',
+          appintime: '2020-6-5',
           status: '社团成员',
         },
         {
           id:'31710063',
           name: '王靖平',
           face: 'https://ae01.alicdn.com/kf/H5a1b68ed1a424006827c91d2b96c4cd5J.jpg',
-          registtime: '2020-6-6',
+          appintime: '2020-6-6',
           status: '待审核',
         }
       ],

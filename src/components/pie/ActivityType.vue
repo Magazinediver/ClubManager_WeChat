@@ -67,29 +67,20 @@
       }
     },
     methods:{
-      getData () {
-        // jsonp('https://news.sina.com.cn/project/fymap/ncp2020_full_data.json?_=1591274230841', {}, (err, data) => {
-        //   console.log(data)
-        //   if (!err) {
-        //     // console.log(data)
-        //     this.list = data.data.list.map(item => ({name: item.name, value: item.value}))
-        //     this.sort();
-        //     const hubei = this.list[0].value
-        //     this.list = this.list.slice(1,10);
-        //     // console.log(this.list);
-        //     option.series[0].data = this.list
-        //     this.take();
-        //     // console.log(this.address)
-        //     option.legend.data = this.address
-        //     option.title.subtext = '湖北 : ' + hubei
-        //     setTimeout(()=>{
-        //       this.mycharts.setOption(option)
-        //       // echarts初始化的前提是dom渲染完成
-        //     },600)
-        //
-        //   }
-        // })
+      async getData(){
+        const { data: res } = await this.$http.get('/clubmanage/activitypie', {
+        })
+        if (res.meta.status !== 200) {
+          return this.$message.error('获取搜索结果失败！')
+        }
+
+        option.series[0].data = this.list
+        setTimeout(()=>{
+          this.mycharts.setOption(option)
+          // echarts初始化的前提是dom渲染完成
+        },600)
       },
+
       sort(){
         var arrayObj=Array.from(this.list);
         arrayObj.sort(function(a,b){return parseInt(b.value)-parseInt(a.value)})

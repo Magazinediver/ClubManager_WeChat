@@ -161,7 +161,7 @@
         });
       },
       async getData(){
-        const { data: res } = await this.$http.get('/clubmanage/activitypage', {
+        const { data: res } = await this.$http.get('/clubmanage/createactivitypage', {
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取搜索结果失败！')

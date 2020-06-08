@@ -23,9 +23,9 @@
                 label-width="0px"
                 class="login_form"
               >
-                <el-form-item prop="username">
-                  <label style="color: #ff7700;margin-top: 5px;">Username / 用户昵称</label>
-                  <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid"></el-input>
+                <el-form-item prop="uid">
+                  <label style="color: #ff7700;margin-top: 5px;">Uid / 用户学号/工号</label>
+                  <el-input v-model.number="loginForm.uid" prefix-icon="el-icon-user-solid"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
                   <label style="color: #fb7700;margin-bottom: 0px;" class="pull-left">Password / 密码</label>
@@ -77,14 +77,16 @@ export default {
       loginForm: {
         // username: 'admin',
         // password: '123456'
-        username: '',
+        uid: '',
         password: ''
       },
       // 表单验证
       loginFormRules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+        uid: [
+          { required: true, message: '请输入学号'},
+          { type: 'number',  message: '请输入纯数字'},
+          // { min: 5, max: 8, message: '长度在 5 到 8 个字符'},
+
         ],
         password: [
           { required: true, message: '请输入用户密码', trigger: 'blur' },
@@ -109,12 +111,14 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return false
         // this.$http.post('login', this.loginForm): 返回值为promise，包裹请求，用await简化操作 同时加async
-        const { data: res } = await this.$http.post('/clubmanage/user/login',
+        const { data: res } = await this.$http.post('/clubmanage/login',
           this.loginForm
         )
         // console.log(res)
-        if (res.meta.status !== 200)
-          return this.$message.error('登录失败')
+        if (res.meta.status === 404)
+          return this.$message.error('用户不存在')
+        else if(res.meta.status === 400)
+          return this.$message.error('密码错误')
         this.$message.success('登录成功')
         //一、将登陆成功之后的token, 保存到客户端的sessionStorage中; localStorage中是持久化的保存
         //  1.项目中出现了登录之外的其他API接口，必须在登陆之后才能访问
@@ -122,7 +126,7 @@ export default {
         window.sessionStorage.setItem('token', res.data.token)
 
         //二、将登陆用户的信息存入vuex，随取随用
-        this.$store.state.id = res.data.userid
+        this.$store.state.id = this.loginForm.userid
         this.$store.state.name = res.data.name
         this.$store.state.identity = res.data.identity
 

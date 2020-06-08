@@ -179,7 +179,6 @@
       },
       async getclublist() {
         const { data: res } = await this.$http.get('/clubmanage/checkclubpage', {
-          params: this.queryInfo
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取用户列表失败！')
