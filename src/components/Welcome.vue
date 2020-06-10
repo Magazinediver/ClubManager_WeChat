@@ -28,7 +28,7 @@
                 <div
                   class="todo-item"
                   :class="{'todo-item-del': scope.row.status}"
-                >{{scope.row.title}}</div>
+                >{{scope.row}}</div>
               </template>
             </el-table-column>
           </el-table>
@@ -104,8 +104,9 @@
           <el-upload
             class="upload-demo"
             drag
-            action="http://jsonplaceholder.typicode.com/api/posts/"
-            multiple>
+            :on-change="handleChange"
+            :auto-upload="false"
+            >
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -134,11 +135,11 @@ export default {
   components: {ActivityType, ClubType},
   // 此时,页面上的元素,已经被渲染完毕了
   created() {
-    this.form.id = this.$store.state.id
-    this.form.name = this.$store.state.name
-    this.id = this.$store.state.id
-    this.name = this.$store.state.name
-    this.identity = this.$store.state.identity
+    this.form.id = window.sessionStorage.getItem('id')
+    this.form.name = window.sessionStorage.getItem('name')
+    this.id = window.sessionStorage.getItem('id')
+    this.name = window.sessionStorage.getItem('name')
+    this.identity = window.sessionStorage.getItem('identity')
     this.getData()
   },
   data(){
@@ -148,12 +149,10 @@ export default {
       name: '',
       identity: '',
       todoList: [
-        {
-          title: '社团招新活动将在6月20号举办',
-        },
-        {
-          title: '社长请于6月13日在理四306集合开会',
-        },
+        '社团招新活动将在6月20号举办',
+        '社长请于6月13日在理四306集合开会',
+        '社团招新活动将在6月20号举办',
+        '社长请于6月13日在理四306集合开会',
       ],
       pic:[
         'https://ae01.alicdn.com/kf/H06978a26753d4c07bf899f39aef2949bf.jpg',
@@ -175,10 +174,10 @@ export default {
         '理四420',
       ],
       form:{
+        poster:'',
         id:'',
         name:'',
         clubname:'',
-        poster:'',
         type:'',
         describe:'',
         address:'',
@@ -209,6 +208,18 @@ export default {
       this.editVisible = true;
 
     },
+
+    handleChange(file) {
+      var This = this;
+      //this.imageUrl = URL.createObjectURL(file.raw);
+      var reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      reader.onload = function(e){
+        this.result // 这个就是base64编码了
+        This.form.poster = this.result;
+      }
+    },
+
     // 保存编辑
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -234,11 +245,14 @@ export default {
       this.todoList = res.data.todoList
       //取得社团创建表单得地址选项
       this.address = res.data.address
+      // this.$store.state.id = res.data.uid
+      // this.$store.state.name = res.data.name
+      // this.$store.state.identity = res.data.identity
     },
 
 
     async createClub(){
-      const { data: res } = await this.$http.get('/clubmanage/creatclub', {
+      const { data: res } = await this.$http.get('/clubmanage/createclub', {
         params: this.form
       })
       if (res.meta.status !== 200) {

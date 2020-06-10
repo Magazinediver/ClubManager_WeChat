@@ -18,11 +18,11 @@
             <el-input :disabled="true" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="社团名" prop="clubname">
-          <el-col :span="16">
-            <el-input :disabled="true" v-model="form.clubname"></el-input>
-          </el-col>
-        </el-form-item>
+<!--        <el-form-item label="社团名" prop="clubname">-->
+<!--          <el-col :span="16">-->
+<!--            <el-input :disabled="true" v-model="form.clubname"></el-input>-->
+<!--          </el-col>-->
+<!--        </el-form-item>-->
 
         <el-form-item label="解散原因" prop="reason">
           <el-col :span="20">

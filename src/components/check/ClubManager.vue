@@ -91,7 +91,9 @@
     data () {
       return {
         addid: '',
-        deleteid: '',
+        data1:{
+          deleteclubname: '',
+        },
         // 获取该社团所有活动信息
         queryInfo: {
           type : '默认',
@@ -102,28 +104,7 @@
           pagesize: 4,
         },
         clublist: [
-          {
-            id:'31701074',
-            name:'黄驿涵',
-            clubname:'流云梦社',
-            poster:'https://ae01.alicdn.com/kf/Hfa67dd673ebd4dfc8d1fcedd140c8564h.jpg',
-            type:'兴趣',
-            describe:'这是一个很有梦想的社团',
-            address:'文一201',
-            notice:'我们社团人满了不招了',
-            status:'正常运行',
-          },
-          {
-            id:'31701063',
-            name:'王靖平',
-            clubname:'棋社',
-            poster:'https://ae01.alicdn.com/kf/H133eac1ed0fb4a54a55445ef6b455c0dw.jpg',
-            type:'运动',
-            describe:'这是一个有很多高人的社团',
-            address:'教一107',
-            notice:'我们只收没有段位的围棋新手',
-            status:'已废止',
-          }
+
         ],
         total: 1,
 
@@ -144,13 +125,14 @@
         if (res.meta.status !== 200) {
           return this.$message.error('获取用户列表失败！')
         }
-        this.activitylist = res.data
+        this.clublist = res.data.clublist
         this.total = res.total
+
       },
 
       async deleteclub () {
         const { data: res } = await this.$http.get('/clubmanage/deleteclub', {
-          params: this.deleteid
+          params: this.data1
         })
         console.log(res.data.status)
         if (res.meta.status !== 200) {
@@ -173,7 +155,7 @@
           .then(() => {
             // console.log(index)
             // console.log(row)
-            this.deleteid = row.id
+            this.data1.deleteclubname = row.clubname
             this.deleteclub()
             this.getclublist()
           })

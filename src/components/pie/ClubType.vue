@@ -78,7 +78,7 @@
           return this.$message.error('获取搜索结果失败！')
         }
 
-        option.series[0].data = this.list
+        option.series[0].data = res.data
         setTimeout(()=>{
           this.mycharts.setOption(option)
           // echarts初始化的前提是dom渲染完成

@@ -26,7 +26,7 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane :label="`已读消息(${read.length})`" name="second">
+        <el-tab-pane :label="`过时消息(${read.length})`" name="second">
           <template v-if="message === 'second'">
             <el-table :data="read" :show-header="false" style="width: 100%">
               <el-table-column type="index" label="#"></el-table-column>
@@ -44,7 +44,7 @@
               <el-table-column width="200">
                 <template slot-scope="scope">
                   <el-button type="primary" size="small" @click="handleKnowMore(scope.$index,scope.row)">查看详情</el-button>
-                  <el-button type="danger" size="small" @click="handleDel(scope.$index)">删除</el-button>
+                  <el-button type="danger" size="small" @click="handleDel(scope.$index,scope.row)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -144,23 +144,36 @@
       handleAccept(index,row) {
         this.queryInfo.deleteClubName = '';
         this.queryInfo.refuseClubName = '';
-        this.queryInfo.acceptClubName = row.clubname;
+        this.queryInfo.acceptClubName = row.application_id;
+
         this.checkclub();
         console.log(this.queryInfo);
-        const item = this.unread.splice(index, 1);
-        this.read = item.concat(this.read);
+        // const item = this.unread.splice(index, 1);
+        // this.read = item.concat(this.read);
+        this.getclublist()
       },
       handleRefuse(index,row) {
-        this.queryInfo.refuseClubName = row.clubname;
+        this.queryInfo.refuseClubName = row.application_id;
         this.queryInfo.acceptClubName = '';
         this.queryInfo.deleteClubName = '';
+
         this.checkclub();
         console.log(this.queryInfo);
-        const item = this.unread.splice(index, 1);
-        this.read = item.concat(this.read);
+        // const item = this.unread.splice(index, 1);
+        // this.read = item.concat(this.read);
+        this.getclublist()
       },
-      handleDel(index) {
-        const item = this.read.splice(index, 1);
+      handleDel(index,row) {
+        this.queryInfo.refuseClubName = '';
+        this.queryInfo.acceptClubName = '';
+        this.queryInfo.deleteClubName = row.application_id;
+        // const item = this.read.splice(index, 1);
+
+        this.checkclub();
+        console.log(this.queryInfo);
+        // const item = this.read.splice(index, 1);
+        // this.read = item.concat(this.read);
+        this.getclublist()
       },
       handleKnowMore(index, row) {
         console.log(index);
@@ -188,13 +201,13 @@
       },
       async checkclub() {
         const { data: res } = await this.$http.get('/clubmanage/checkclub', {
-          params: this.deleteid
+          params: this.queryInfo
         })
         console.log(res.meat.status)
         if (res.meta.status !== 200) {
           return this.$message.error('删除社员失败！')
         }
-        return this.$message.success('删除成功')
+        return this.$message.success('审核通过')
       },
     },
     computed: {

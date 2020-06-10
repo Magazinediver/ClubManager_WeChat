@@ -53,8 +53,8 @@
           <el-upload
             class="upload-demo"
             drag
-            action="http://jsonplaceholder.typicode.com/api/posts/"
-            multiple>
+            :on-change="handleChange"
+            :auto-upload="false">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -89,6 +89,7 @@
   export default {
     name: "CreateActivity",
     created() {
+      this.getData()
       this.form.id = this.$store.state.id
       this.form.name = this.$store.state.name
     },
@@ -160,6 +161,16 @@
           }
         });
       },
+      handleChange(file) {
+        var This = this;
+        //this.imageUrl = URL.createObjectURL(file.raw);
+        var reader = new FileReader();
+        reader.readAsDataURL(file.raw);
+        reader.onload = function(e){
+          this.result // 这个就是base64编码了
+          This.form.poster = this.result;
+        }
+      },
       async getData(){
         const { data: res } = await this.$http.get('/clubmanage/createactivitypage', {
         })
@@ -170,13 +181,14 @@
         this.$message.success('获取活动申请表数据成功！')
       },
       async createActivity() {
-        const { data: res } = await this.$http.get('/clubmanage/creatactivity', {
+        const { data: res } = await this.$http.get('/clubmanage/createactivity', {
           params: this.form
         })
         if (res.meta.status !== 200) {
           return this.$message.error('获取搜索结果失败！')
         }
         this.$message.success(`活动创建申请提交成功`);
+        this.$router.push('/welcome')
       },
       resetForm(formName) {
         // console.log(1111)

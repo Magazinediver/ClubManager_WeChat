@@ -39,8 +39,8 @@
           }
         },
         data: [
-          {value: 10, name: '兴趣爱好'},
-          {value: 5, name: '学术创新'},
+          {value: '10', name: '兴趣爱好'},
+          {value: '5', name: '学术创新'},
           {value: 15, name: '公益服务'},
           {value: 25, name: '体育运动'},
         ]
@@ -74,7 +74,7 @@
           return this.$message.error('获取搜索结果失败！')
         }
 
-        option.series[0].data = this.list
+        option.series[0].data = res.data
         setTimeout(()=>{
           this.mycharts.setOption(option)
           // echarts初始化的前提是dom渲染完成

@@ -25,7 +25,7 @@
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane :label="`已读消息(${read.length})`" name="second">
+        <el-tab-pane :label="`过时消息(${read.length})`" name="second">
           <template v-if="message === 'second'">
             <el-table :data="read">
               <el-table-column type="index" label="#"></el-table-column>
@@ -42,7 +42,7 @@
               <el-table-column width="200">
                 <template slot-scope="scope">
                   <el-button type="primary" size="small" @click="handleKnowMore(scope.$index,scope.row)">查看详情</el-button>
-                  <el-button type="danger" size="small" @click="handleDel(scope.$index)">删除</el-button>
+                  <el-button type="danger" size="small" @click="handleDel(scope.$index,scope.row)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -84,7 +84,7 @@
   export default {
     name: 'CheckClub',
     created() {
-      this.getclublist()
+      this.getactivitylist()
     },
     data() {
       return {
@@ -92,14 +92,14 @@
         showHeader: false,
         editVisible: false,
         queryInfo:{
-          deleteActivityName: '',
-          refuseActivityName: '',
-          acceptActivityName: '',
+          deleteActivityId: '',
+          refuseActivityId: '',
+          acceptActivityId: '',
         },
         form:{
           id:'',
           name:'',
-          activityname:'',
+          activityid:'',
           contact:'',
           poster:'',
           type:'',
@@ -150,25 +150,35 @@
     },
     methods: {
       handleAccept(index,row) {
-        this.queryInfo.deleteActivityName = '';
-        this.queryInfo.refuseActivityName = '';
-        this.queryInfo.acceptActivityName = row.activityname;
-        this.checkclub();
+        this.queryInfo.deleteActivityId = '';
+        this.queryInfo.refuseActivityId = '';
+        this.queryInfo.acceptActivityId = row.application_id;
+        this.checkactivity()();
         console.log(this.queryInfo);
-        const item = this.unread.splice(index, 1);
-        this.read = item.concat(this.read);
+        // const item = this.unread.splice(index, 1);
+        // this.read = item.concat(this.read);
+        this.getactivitylist()
       },
       handleRefuse(index,row) {
-        this.queryInfo.refuseActivityName = row.activityname;
-        this.queryInfo.acceptActivityName = '';
-        this.queryInfo.deleteActivityName = '';
-        this.checkclub();
+        this.queryInfo.refuseActivityId = row.application_id;
+        this.queryInfo.acceptActivityId = '';
+        this.queryInfo.deleteActivityId = '';
+        this.checkactivity()();
         console.log(this.queryInfo);
-        const item = this.unread.splice(index, 1);
-        this.read = item.concat(this.read);
+        // const item = this.unread.splice(index, 1);
+        // this.read = item.concat(this.read);
+        this.getactivitylist()
       },
-      handleDel(index) {
-        const item = this.read.splice(index, 1);
+      handleDel(index,row) {
+        // const item = this.read.splice(index, 1);
+        this.queryInfo.refuseActivityId = '';
+        this.queryInfo.acceptActivityId = '';
+        this.queryInfo.deleteActivityId = row.application_id;
+        this.checkactivity()();
+        console.log(this.queryInfo);
+        // const item = this.unread.splice(index, 1);
+        // this.read = item.concat(this.read);
+        this.getactivitylist()
       },
       handleKnowMore(index, row) {
         console.log(index);
@@ -187,7 +197,7 @@
 
         this.editVisible = true;
       },
-      async getclublist() {
+      async getactivitylist() {
         const { data: res } = await this.$http.get('/clubmanage/checkactivitypage', {
         })
         if (res.meta.status !== 200) {
@@ -196,15 +206,15 @@
         this.read = res.data.read
         this.unread = res.data.unread
       },
-      async checkclub() {
-        const { data: res } = await this.$http.get('/clubmanage/deleteactivity', {
-          params: this.deleteid
+      async checkactivity() {
+        const { data: res } = await this.$http.get('/clubmanage/checkactivity', {
+          params: this.queryInfo
         })
         console.log(res.meat.status)
         if (res.meta.status !== 200) {
           return this.$message.error('删除社员失败！')
         }
-        return this.$message.success('删除成功')
+        return this.$message.success('审核通过')
       },
     },
     computed: {

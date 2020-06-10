@@ -125,8 +125,12 @@ export default {
         //  2.token 只应在当前网站打开期间生效，所以将token保存在sessionStorage中
         window.sessionStorage.setItem('token', res.data.token)
 
+        window.sessionStorage.setItem('id', this.loginForm.uid)
+        window.sessionStorage.setItem('name', res.data.name)
+        window.sessionStorage.setItem('identity', res.data.identity)
+
         //二、将登陆用户的信息存入vuex，随取随用
-        this.$store.state.id = this.loginForm.userid
+        this.$store.state.id = this.loginForm.uid
         this.$store.state.name = res.data.name
         this.$store.state.identity = res.data.identity
 

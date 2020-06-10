@@ -131,8 +131,8 @@
           <el-upload
             class="upload-demo"
             drag
-            action="http://jsonplaceholder.typicode.com/api/posts/"
-            multiple>
+            :on-change="handleChange"
+            :auto-upload="false">
             <i class="el-icon-upload"></i>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -177,6 +177,7 @@
         form:{
           id:'',
           name:'',
+          activityid:'',
           activityname:'',
           contact:'',
           poster:'',
@@ -209,6 +210,7 @@
         ],
         activitylist: [
           {
+            activityid:'1',
             activityname: '社团招新',
             poster: 'https://ae01.alicdn.com/kf/H06978a26753d4c07bf899f39aef2949bf.jpg',
             date: '2020-6-5',
@@ -220,6 +222,7 @@
             status: '准备进行',
           },
           {
+            activityid:'1',
             activityname: '团建',
             poster: 'https://ae01.alicdn.com/kf/H54a7061e839f4d7c9ddc5679868b89f7l.jpg',
             date: '2020-6-6',
@@ -275,7 +278,16 @@
           }
         });
       },
-
+      handleChange(file) {
+        var This = this;
+        //this.imageUrl = URL.createObjectURL(file.raw);
+        var reader = new FileReader();
+        reader.readAsDataURL(file.raw);
+        reader.onload = function(e){
+          this.result // 这个就是base64编码了
+          This.form.poster = this.result;
+        }
+      },
       aclick() {
         this.$router.push('/home');
       },
@@ -341,6 +353,7 @@
         this.form.attention = row.attention
         this.form.contact = row.contact
         this.form.poster = row.poster
+        this.form.activityid = row.activityid
 
         this.editVisible = true;
       },

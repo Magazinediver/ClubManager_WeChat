@@ -28,17 +28,27 @@
                   <label style="color: #ff7700;margin-top: 5px;">ID / 学号/工号</label>
                   <el-input
                     v-model="resetForm.id"
+                    disabled
                     prefix-icon="el-icon-user-solid">
                   </el-input>
                 </el-form-item>
 
-                <el-form-item prop="password">
-                  <label style="color: #ff7700;margin-bottom: 0px;" class="pull-left">Password / 密码</label>
+                <el-form-item prop="oldpassword">
+                  <label style="color: #ff7700;margin-bottom: 0px;" class="pull-left">Password / 旧密码</label>
                    <el-input
-                    v-model="resetForm.password"
+                    v-model="resetForm.oldpassword"
                     type="password"
                     prefix-icon="el-icon-lock">
                    </el-input>
+                </el-form-item>
+
+                <el-form-item prop="newpassword">
+                  <label style="color: #ff7700;margin-bottom: 0px;" class="pull-left">Password / 新密码</label>
+                  <el-input
+                    v-model="resetForm.newpassword"
+                    type="password"
+                    prefix-icon="el-icon-lock">
+                  </el-input>
                 </el-form-item>
 
                 <el-form-item prop="cpassword">
@@ -73,21 +83,29 @@
 <script>
   export default {
     name: "recoverpasswd",
+    created() {
+      this.resetForm.id = this.$store.state.id
+    },
     data() {
       return {
         resetForm: {
           id: '',
-          password: '',
+          oldpassword: '',
+          newpassword: '',
           cpassword: '',
         },
         // 表单验证
         resetFormRules: {
           id: [
             { required: true, message: '请输入学号/工号', trigger: 'blur' },
-            { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' }
+            // { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' }
           ],
-          password: [
+          oldpassword: [
             {required: true, message: '请输入旧密码', trigger: 'blur'},
+            {min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur'}
+          ],
+          newpassword:[
+            {required: true, message: '请输入新密码', trigger: 'blur'},
             {min: 6, max: 18, message: '长度在 6 到 18 个字符', trigger: 'blur'}
           ],
           cpassword: [
@@ -99,7 +117,7 @@
     },
     methods: {
       checkpwd(){
-        if(this.resetForm.password !== this.resetForm.cpassword){
+        if(this.resetForm.newpassword !== this.resetForm.cpassword){
           this.$message.error('两次输入的密码不相同')
         }else{
          this.reset()
@@ -114,10 +132,10 @@
           if (!valid) return false
           // this.$http.post('reset', this.resetForm): 返回值为promise
           // 返回值为promise，可加await简化操作 相应的也要加async
-          const {data: res} = await this.$http.post('/clubmanage/changpwd', this.resetForm)
+          const {data: res} = await this.$http.post('/clubmanage/changepwd', this.resetForm)
           // console.log(res)
-          if (res.meta.status !== 200) return this.$message.error('重置失败')
-
+          if (res.meta.status !== 200) return this.$message.error('原密码错误')
+          this.$message.success('重置成功')
           // 2、通过编程式导航跳转到后台主页, 路由地址为：/home
           this.$router.push('/login')
         })
@@ -143,12 +161,12 @@
   .center-sign{
     position: absolute;
     left: 50%;
-    top: 45%;
+    top: 50%;
     -webkit-transform: translate(-50%, -50%);
   }
   .reset_box {
     width: 470px;
-    height: 365px;
+    height: 465px;
     background-color: #fff;
     border-radius: 5px 5px 15px;
 

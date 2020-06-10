@@ -142,7 +142,7 @@
           }
           const {data: res} = await this.$http.post('/clubmanage/regist/', this.addUserForm)
           if (res.meta.status !== 200) {
-            this.$message.error('注册用户失败！')
+            this.$message.error('用户已存在')
             return false
           }
           this.$message.success('注册成功')
